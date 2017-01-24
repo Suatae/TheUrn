@@ -1,0 +1,16 @@
+[
+{
+  "modid": "tu",
+  "name": "TheUrn",
+  "description": "A simple alternative death chest mod for Minecraft.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Suatae"],
+  "credits": "Thanks to Pahimar and MineMaarten for their tutorials.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
