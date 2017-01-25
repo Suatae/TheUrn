@@ -5,13 +5,22 @@ import java.util.Random;
 import com.suatae.tu.common.block.TileEntityUrn;
 import com.suatae.tu.lib.Ref;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockUrn extends BlockContainer{
@@ -20,11 +29,12 @@ public class BlockUrn extends BlockContainer{
 		super(Material.rock);
 		this.setBlockName(Ref.N.Urn);
 		this.setBlockTextureName(Ref.N.Urn_T);
-		//this.setCreativeTab(NeerSolusTab.NeerSolus_TAB);
 		this.setStepSound(Block.soundTypeStone);
 		this.setHardness(1.5F);
 		this.setResistance(10.0F);
 		this.setBlockBounds(0.125F, 0F, 0.125F, 0.875F, 1F, 0.875F);
+		this.setLightLevel(0);
+		this.setLightOpacity(0);
 	}
 	
 	public boolean canBlockGrass(){
@@ -41,6 +51,11 @@ public class BlockUrn extends BlockContainer{
         return false;
     }
     
+    @Override
+	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player) {
+		return null;
+	}
+    
 	@Override
 	public int getRenderType() {
 		return -1;
@@ -49,9 +64,6 @@ public class BlockUrn extends BlockContainer{
 	public void breakBlock(World world, int x, int y, int z, Block block, int slot)
     {
         TileEntityUrn teUrn = (TileEntityUrn)world.getTileEntity(x, y, z);
-
-        //if (teUrn != null)
-      //  {
             for (int i1 = 0; i1 < teUrn.getSizeInventory(); ++i1)
             {
                 ItemStack itemstack = teUrn.getStackInSlot(i1);
@@ -89,9 +101,26 @@ public class BlockUrn extends BlockContainer{
             }
 
             world.func_147453_f(x, y, z, block);
-     //   }
 
         super.breakBlock(world, x, y, z, block, slot);
+    }
+	
+	public int getExpDrop(IBlockAccess world, int metadata, int fortune)
+    {
+        return 0;
+    }
+	
+	public void dropXpOnBlockBreak(World world, int x, int y, int z, int xp)
+    {
+        if (!world.isRemote)
+        {
+            while (xp > 0)
+            {
+                int i1 = EntityXPOrb.getXPSplit(xp);
+                xp -= i1;
+                world.spawnEntityInWorld(new EntityXPOrb(world, (double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, i1));
+            }
+        }
     }
 	
 	@Override

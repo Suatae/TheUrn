@@ -10,5 +10,7 @@ public class Ref {
 	public static class N{
 		public final static String Urn = "blockUrn";
 		public final static String Urn_T = "tu:blockUrn";
+		public final static String bNull = "blockNull";
+		public final static String bNull_T = "tu:blockNull";
 	}
 }

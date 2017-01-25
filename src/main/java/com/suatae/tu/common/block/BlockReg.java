@@ -10,9 +10,11 @@ import net.minecraft.block.Block;
 public class BlockReg {
 	
 	public static final Block blockUrn = new BlockUrn();
+	public static final Block blockNull = new BlockNull();
 
 	public static void init(){
 		GameRegistry.registerBlock(blockUrn, "blockUrn");
+		GameRegistry.registerBlock(blockNull, "blockNull");
 		GameRegistry.registerTileEntity(TileEntityUrn.class, "TileEntityUrn");
 	}
 }

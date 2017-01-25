@@ -3,9 +3,11 @@ package com.suatae.tu.common.block;
 import java.util.Random;
 
 import com.suatae.tu.common.block.BlockReg;
+import com.suatae.tu.lib.Ref;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -16,7 +18,7 @@ public class TileEntityUrn extends TileEntity implements IInventory{
     private Random ran = new Random();
     //protected String field_146020_a;
     private static final String __OBFID = "CL_00000352";
-
+    
     /**
      * Returns the number of slots in the inventory.
      */
@@ -169,11 +171,6 @@ public class TileEntityUrn extends TileEntity implements IInventory{
                 this.deathStack[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
             }
         }
-
-//        if (nbt.hasKey("CustomName", 8))
-//        {
-//            this.field_146020_a = nbt.getString("CustomName");
-//        }
     }
 
     public void writeToNBT(NBTTagCompound nbt)
@@ -191,14 +188,8 @@ public class TileEntityUrn extends TileEntity implements IInventory{
                 nbttaglist.appendTag(nbttagcompound1);
             }
         }
-        
-
         nbt.setTag("Items", nbttaglist);
 
-//        if (this.hasCustomInventoryName())
-//        {
-//            nbt.setString("CustomName", this.field_146020_a);
-//        }
     }
 
     /**
