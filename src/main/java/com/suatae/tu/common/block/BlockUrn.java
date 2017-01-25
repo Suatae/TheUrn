@@ -13,6 +13,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -99,29 +100,34 @@ public class BlockUrn extends BlockContainer{
                     }
                 }
             }
-
+            
             world.func_147453_f(x, y, z, block);
-
         super.breakBlock(world, x, y, z, block, slot);
     }
+	@Override
+    public void onBlockHarvested(World world, int x, int y, int z, int metadata, EntityPlayer player) {
+        player.addExhaustion(0.025F);
+        
+    //   player.addExperience(200);
+	}
 	
-	public int getExpDrop(IBlockAccess world, int metadata, int fortune)
-    {
-        return 0;
-    }
-	
-	public void dropXpOnBlockBreak(World world, int x, int y, int z, int xp)
-    {
-        if (!world.isRemote)
-        {
-            while (xp > 0)
-            {
-                int i1 = EntityXPOrb.getXPSplit(xp);
-                xp -= i1;
-                world.spawnEntityInWorld(new EntityXPOrb(world, (double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, i1));
-            }
-        }
-    }
+//	public int getExpDrop(IBlockAccess world, int metadata, int fortune)
+//    {
+//        return 5;
+//    }
+//	
+//	public void dropXpOnBlockBreak(World world, int x, int y, int z, int xp)
+//    {
+//        if (!world.isRemote)
+//        {
+//            while (xp > 0)
+//            {
+//                int i1 = EntityXPOrb.getXPSplit(xp);
+//                xp -= i1;
+//                world.spawnEntityInWorld(new EntityXPOrb(world, (double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, i1));
+//            }
+//        }
+//    }
 	
 	@Override
 	public String getUnlocalizedName() {

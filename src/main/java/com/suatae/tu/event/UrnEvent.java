@@ -5,10 +5,14 @@ import java.util.Iterator;
 import com.suatae.tu.common.block.BlockReg;
 import com.suatae.tu.common.block.TileEntityUrn;
 
+import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -17,6 +21,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
@@ -25,7 +30,7 @@ public class UrnEvent {
 public UrnEvent() {
 	}
 	
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onPlayerDrops(PlayerDropsEvent event) {
 		boolean saveItems = false;
 		int counter = 0;
@@ -42,7 +47,6 @@ public UrnEvent() {
 			int z = MathHelper.floor_double(event.entityPlayer.posZ);
 			
 			World world = event.entityPlayer.worldObj;
-
 			
 			ItemStack skull = new ItemStack(Items.skull, 1, 3);
 			NBTTagCompound nametag = new NBTTagCompound();
@@ -69,5 +73,12 @@ public UrnEvent() {
 			}
 		}
 	}
+	
+//	public void onPlayerDeath(LivingDeathEvent event){
+//		if(event.entity instanceof EntityPlayerMP){
+//			EntityPlayer player = (EntityPlayer)event.entity;	
+//		}
+//		
+//	}
 
 }
